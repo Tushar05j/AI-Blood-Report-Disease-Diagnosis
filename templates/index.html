@@ -1,0 +1,230 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+```
+<title>Blood Report ML Demo</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
+>
+```
+
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <span class="plus">+</span>
+        <span>Blood Report <b>ML Demo</b></span>
+    </div>
+
+```
+<span class="tag">Academic prototype</span>
+```
+
+</header>
+
+<main>
+
+```
+<!-- HERO SECTION -->
+<section class="hero">
+
+    <p class="eyebrow">MACHINE LEARNING PROJECT</p>
+
+    <h1>
+        AI Blood Report
+        <br>
+        <span>Disease Classification</span>
+    </h1>
+
+    <p class="intro">
+        Enter CBC feature values to view the output of the trained
+        Random Forest model.
+    </p>
+
+    <div class="notice">
+        <b>Educational use only:</b>
+        This prototype is not a medical device, does not provide
+        a clinical diagnosis, and must not be used for patient-care decisions.
+    </div>
+
+</section>
+
+
+<!-- INPUT + OUTPUT PANEL -->
+<section class="panel">
+
+    <div class="heading">
+
+        <div>
+            <p class="eyebrow">MODEL INPUT</p>
+            <h2>CBC Parameters</h2>
+        </div>
+
+        <span class="tag">01 / INPUT</span>
+
+    </div>
+
+
+    <p class="muted">
+        Use the same units and conventions as the training dataset.
+    </p>
+
+
+    <!-- INPUT FORM -->
+    <form method="post">
+
+        <div class="fields">
+
+            {% for feature in features %}
+
+            <label>
+                <span>{{ feature }}</span>
+
+                <input
+                    type="number"
+                    step="any"
+                    min="0"
+                    name="{{ feature }}"
+                    value="{{ values[feature] }}"
+                    placeholder="Enter {{ feature }}"
+                    required
+                >
+            </label>
+
+            {% endfor %}
+
+        </div>
+
+
+        <button type="submit">
+            Generate Model Prediction
+            <span>→</span>
+        </button>
+
+    </form>
+
+
+    <!-- ERROR MESSAGE -->
+    {% if error %}
+
+    <div class="error">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    <!-- MODEL RESULT -->
+    {% if result %}
+
+    <div class="result">
+
+        <p class="eyebrow">MODEL OUTPUT</p>
+
+        <h2>{{ result.label }}</h2>
+
+        <p class="muted">
+            Predicted dataset class ID:
+            <b>{{ result.id }}</b>
+        </p>
+
+
+        <!-- VOTE ESTIMATES -->
+        {% if result.votes %}
+
+        <div class="votes-section">
+
+            <h3>Model Class-Vote Estimates</h3>
+
+            <p class="muted">
+                These are not calibrated medical probabilities or certainty.
+            </p>
+
+
+            {% for item in result.votes %}
+
+            <div class="vote">
+
+                <div class="vote-header">
+                    <span>{{ item.label }}</span>
+                    <b>{{ item.percent }}%</b>
+                </div>
+
+                <div class="track">
+                    <i style="width: {{ item.percent }}%"></i>
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- INFORMATION CARDS -->
+<section class="cards">
+
+    <article>
+        <small>01</small>
+
+        <h3>Preprocessing</h3>
+
+        <p>
+            The saved pipeline applies its fitted preprocessing
+            steps to the input.
+        </p>
+    </article>
+
+
+    <article>
+        <small>02</small>
+
+        <h3>Random Forest</h3>
+
+        <p>
+            Multiple decision trees contribute votes to the
+            predicted class.
+        </p>
+    </article>
+
+
+    <article>
+        <small>03</small>
+
+        <h3>Interpretation</h3>
+
+        <p>
+            Outputs reflect dataset patterns and need
+            independent validation.
+        </p>
+    </article>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+    Academic demonstration • Verify class mapping and dataset units before use.
+</footer>
+```
+
+</main>
+
+</body>
+</html>
