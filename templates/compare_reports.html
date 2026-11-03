@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compare CBC Reports | HemoPredict</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <header>
+      <div class="brand">
+        <span class="plus">+</span>
+        <strong>HemoPredict</strong>
+      </div>
+
+      <span class="tag">CBC REPORT ANALYSIS</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">BLOOD REPORT COMPARISON</p>
+
+        <h1>Compare Your <span>CBC Reports</span></h1>
+
+        <p class="intro">
+          Upload two CBC reports to compare blood parameters, numerical changes
+          and laboratory reference ranges.
+        </p>
+
+        <p class="notice">
+          Educational tool only. This comparison is not a medical diagnosis.
+          Consult a healthcare professional for interpretation of your reports.
+        </p>
+      </section>
+
+      <!-- UPLOAD SECTION -->
+
+      <section class="panel">
+        <div class="heading">
+          <h2>Upload Reports</h2>
+          <span class="tag">PDF ONLY · 10 MB MAX</span>
+        </div>
+
+        <p class="muted">
+          Upload your older report first and your latest report second. Only
+          digitally generated, text-readable PDFs are supported.
+        </p>
+
+        <form
+          action="{{ url_for('compare_reports') }}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="upload-grid">
+            <div class="upload-card">
+              <div class="upload-icon">01</div>
+
+              <h3>Previous CBC Report</h3>
+
+              <p class="muted">Your older blood test report</p>
+
+              <label for="previous_report"> Select previous report </label>
+
+              <input
+                type="file"
+                id="previous_report"
+                name="previous_report"
+                accept=".pdf,application/pdf"
+                required
+              />
+            </div>
+
+            <div class="upload-card">
+              <div class="upload-icon">02</div>
+
+              <h3>Latest CBC Report</h3>
+
+              <p class="muted">Your most recent blood test report</p>
+
+              <label for="latest_report"> Select latest report </label>
+
+              <input
+                type="file"
+                id="latest_report"
+                name="latest_report"
+                accept=".pdf,application/pdf"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit">Compare Reports <span>→</span></button>
+        </form>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+      </section>
+
+      <!-- EXTRACTED REPORT VALUES -->
+
+      {% if previous_report and latest_report %}
+
+      <section class="panel report-preview">
+        <div class="heading">
+          <h2>Extracted CBC Values</h2>
+          <span class="tag">REVIEW VALUES</span>
+        </div>
+
+        <p class="muted">
+          Check these extracted values against the original PDF reports. The
+          comparison below uses the extracted values.
+        </p>
+
+        {% for report, heading in [ (previous_report, "Previous Report"),
+        (latest_report, "Latest Report") ] %}
+
+        <h3>{{ heading }}</h3>
+
+        <p class="muted">
+          Report date: {{ report.report_date or "Not detected" }}
+        </p>
+
+        <div class="table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Unit</th>
+                <th>Reference Range</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for parameter, item in report.cbc_values.items() %}
+
+              <tr>
+                <td>{{ parameter }}</td>
+                <td>{{ item.value }}</td>
+                <td>{{ item.unit or "Not detected" }}</td>
+
+                <td>
+                  {% if item.reference_range and item.reference_range.low is not
+                  none and item.reference_range.high is not none %} {{
+                  item.reference_range.low }} – {{ item.reference_range.high }}
+                  {% else %} Not available {% endif %}
+                </td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% if report.missing_parameters %}
+
+        <div class="error">
+          Parameters not detected: {{ report.missing_parameters | join(", ") }}
+        </div>
+
+        {% endif %} {% endfor %}
+
+        <p class="ai-disclaimer">
+          Please verify the extracted values, units and reference ranges against
+          your original laboratory reports. Incorrect extraction can affect the
+          comparison.
+        </p>
+      </section>
+
+      <!-- COMPARISON RESULTS -->
+
+      <section class="panel comparison-results">
+        <div class="heading">
+          <h2>Comparison Results</h2>
+          <span class="tag">CBC ANALYSIS</span>
+        </div>
+
+        <p class="muted">
+          Previous report: {{ comparison.previous_report_date or "Not available"
+          }}
+
+          <br />
+
+          Latest report: {{ comparison.latest_report_date or "Not available" }}
+        </p>
+
+        <div class="table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Previous</th>
+                <th>Latest</th>
+                <th>Change</th>
+                <th>Change %</th>
+                <th>Direction / Status</th>
+                <th>Previous Range</th>
+                <th>Latest Range</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for item in comparison.results %}
+
+              <tr>
+                <td>{{ item.parameter }}</td>
+
+                {% if item.status == "Compared" %}
+
+                <td>{{ item.previous_value }}</td>
+                <td>{{ item.latest_value }}</td>
+
+                <td>{{ item.absolute_change }}</td>
+
+                <td>
+                  {% if item.percentage_change is not none %} {{
+                  item.percentage_change }}% {% else %} — {% endif %}
+                </td>
+
+                <td>{{ item.direction }}</td>
+
+                <td>{{ item.previous_reference_status }}</td>
+                <td>{{ item.latest_reference_status }}</td>
+
+                {% else %}
+
+                <td colspan="7">{{ item.status }} — {{ item.message }}</td>
+
+                {% endif %}
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <p class="ai-disclaimer">
+          An increase or decrease does not automatically indicate improvement or
+          deterioration. Reference ranges can vary between laboratories and
+          depend on individual context. Discuss your results with a healthcare
+          professional.
+        </p>
+      </section>
+
+      {% endif %}
+
+      <footer>
+        HemoPredict · AI-powered blood report analysis · Educational use only
+      </footer>
+    </main>
+  </body>
+</html>

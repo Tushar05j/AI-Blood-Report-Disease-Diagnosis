@@ -1,1 +1,663 @@
-*{box-sizing:border-box}body{margin:0;background:#f4f7fc;color:#18263d;font-family:Segoe UI,Arial,sans-serif}header{height:66px;background:white;border-bottom:1px solid #e2e8f0;padding:0 max(5vw,22px);display:flex;align-items:center;justify-content:space-between}.brand{font-size:15px}.plus{display:inline-grid;place-items:center;background:#eaf1ff;color:#2463eb;border-radius:9px;width:31px;height:31px;font-size:24px;margin-right:8px}.tag{font-size:10px;background:#f0f4fa;color:#596a82;border-radius:20px;padding:7px 10px;font-weight:bold}main{max-width:940px;margin:auto;padding:38px 20px}.hero{text-align:center;max-width:690px;margin:0 auto 24px}.eyebrow{color:#2463eb;font-size:10px;letter-spacing:.16em;font-weight:800;margin:0 0 9px}h1{font-size:clamp(31px,5vw,46px);line-height:1.1;letter-spacing:-1.5px;margin:0}h1 span{color:#2463eb}.intro,.muted{color:#6b7a90;font-size:12px;line-height:1.6}.notice{display:inline-block;text-align:left;background:#fff8e7;border:1px solid #f0d69a;color:#75551d;padding:11px 14px;border-radius:9px;font-size:11px;line-height:1.5}.panel{background:#fff;border:1px solid #e3e9f1;border-radius:16px;padding:24px;box-shadow:0 9px 30px #17243a0a}.heading{display:flex;justify-content:space-between;align-items:center}h2{font-size:22px;margin:0}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.fields label{font-size:12px;font-weight:700;color:#3a4960;display:flex;flex-direction:column;gap:7px}input{padding:11px;border:1px solid #dce4ee;border-radius:8px;font-size:13px;width:100%}input:focus{outline:2px solid #2463eb33;border-color:#2463eb}button{margin-top:20px;border:0;border-radius:9px;background:#2463eb;color:white;padding:13px 17px;font-weight:700;cursor:pointer}button span{margin-left:10px}.error{margin-top:16px;background:#fff0ef;color:#8a2925;border:1px solid #f1ceca;border-radius:8px;padding:11px;font-size:12px}.result{margin-top:23px;background:#f4f7ff;border:1px solid #dce6ff;border-radius:12px;padding:19px}.result h2{color:#2463eb}.result h3{font-size:13px;margin:20px 0 5px}.vote{margin:12px 0}.vote>div:first-child{display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px}.track{height:7px;border-radius:20px;background:#e1e8f5;overflow:hidden}.track i{display:block;height:100%;background:#2463eb;border-radius:20px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:16px}.cards article{background:white;border:1px solid #e3e9f1;border-radius:12px;padding:17px}.cards small{color:#2463eb;font-weight:bold}.cards h3{font-size:13px;margin:9px 0 6px}.cards p{font-size:11px;line-height:1.6;color:#6b7a90;margin:0}footer{text-align:center;color:#8793a5;font-size:10px;margin-top:22px}@media(max-width:620px){.fields{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.panel{padding:17px}}
+/* =========================================
+   1. GLOBAL STYLES
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f4f7fc;
+  color: #18263d;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* =========================================
+   2. HEADER
+========================================= */
+
+header {
+  height: 66px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 max(5vw, 22px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.plus {
+  display: inline-grid;
+  place-items: center;
+
+  background: #eaf1ff;
+  color: #2463eb;
+
+  border-radius: 9px;
+  width: 31px;
+  height: 31px;
+
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.tag {
+  font-size: 10px;
+  background: #f0f4fa;
+  color: #596a82;
+
+  border-radius: 20px;
+  padding: 7px 10px;
+  font-weight: bold;
+}
+
+/* =========================================
+   3. MAIN LAYOUT
+========================================= */
+
+main {
+  max-width: 940px;
+  margin: auto;
+  padding: 38px 20px;
+}
+
+/* =========================================
+   4. HERO SECTION
+========================================= */
+
+.hero {
+  text-align: center;
+  max-width: 690px;
+  margin: 0 auto 24px;
+}
+
+.eyebrow {
+  color: #2463eb;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  font-weight: 800;
+  margin: 0 0 9px;
+}
+
+h1 {
+  font-size: clamp(31px, 5vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin: 0;
+}
+
+h1 span {
+  color: #2463eb;
+}
+
+.intro,
+.muted {
+  color: #6b7a90;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.notice {
+  display: inline-block;
+  text-align: left;
+
+  background: #fff8e7;
+  border: 1px solid #f0d69a;
+  color: #75551d;
+
+  padding: 11px 14px;
+  border-radius: 9px;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   5. INPUT PANEL
+========================================= */
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #e3e9f1;
+  border-radius: 16px;
+  padding: 24px;
+
+  box-shadow: 0 9px 30px #17243a0a;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.fields label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3a4960;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+input {
+  padding: 11px;
+  border: 1px solid #dce4ee;
+  border-radius: 8px;
+  font-size: 13px;
+  width: 100%;
+}
+
+input:focus {
+  outline: 2px solid #2463eb33;
+  border-color: #2463eb;
+}
+
+button {
+  margin-top: 20px;
+  border: 0;
+  border-radius: 9px;
+
+  background: #2463eb;
+  color: white;
+
+  padding: 13px 17px;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #174fc5;
+}
+
+button span {
+  margin-left: 10px;
+}
+
+/* =========================================
+   6. ERROR MESSAGE
+========================================= */
+
+.error {
+  margin-top: 16px;
+
+  background: #fff0ef;
+  color: #8a2925;
+  border: 1px solid #f1ceca;
+
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 12px;
+}
+
+/* =========================================
+   7. RANDOM FOREST RESULT
+========================================= */
+
+.result {
+  margin-top: 23px;
+
+  background: #f4f7ff;
+  border: 1px solid #dce6ff;
+  border-radius: 12px;
+
+  padding: 19px;
+}
+
+.result h2 {
+  color: #2463eb;
+}
+
+.result h3 {
+  font-size: 13px;
+  margin: 20px 0 5px;
+}
+
+/* =========================================
+   8. MODEL VOTE ESTIMATES
+========================================= */
+
+.vote {
+  margin: 12px 0;
+}
+
+.vote > div:first-child {
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.track {
+  height: 7px;
+  border-radius: 20px;
+  background: #e1e8f5;
+  overflow: hidden;
+}
+
+.track i {
+  display: block;
+  height: 100%;
+
+  background: #2463eb;
+  border-radius: 20px;
+}
+
+/* =========================================
+   9. HEMOPREDICT AI EXPLANATION
+========================================= */
+
+.ai-section {
+  margin-top: 30px;
+  padding: 26px;
+
+  border: 1px solid #ddd6fe;
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, #faf9ff, #f3f6ff);
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 14px;
+  border-radius: 30px;
+
+  background: #ede9fe;
+  color: #6d4bc3;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.ai-section h3 {
+  color: #252b45;
+  margin: 16px 0 18px;
+  font-size: 21px;
+}
+
+.ai-content {
+  background: #ffffff;
+  border: 1px solid #e7e5f4;
+  border-radius: 12px;
+
+  padding: 24px;
+
+  color: #44445a;
+  line-height: 1.8;
+  font-size: 14px;
+
+  overflow-wrap: anywhere;
+}
+
+/* AI headings */
+
+.ai-content h2,
+.ai-content h3,
+.ai-content h4 {
+  color: #5541a5;
+  margin: 20px 0 10px;
+  font-size: 16px;
+}
+
+.ai-content h2:first-child,
+.ai-content h3:first-child,
+.ai-content h4:first-child {
+  margin-top: 0;
+}
+
+/* AI paragraphs */
+
+.ai-content p {
+  margin: 10px 0;
+}
+
+/* AI lists */
+
+.ai-content ul,
+.ai-content ol {
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+.ai-content li {
+  margin-bottom: 9px;
+  padding-left: 4px;
+}
+
+/* AI bold text */
+
+.ai-content strong {
+  color: #29254b;
+  font-weight: 700;
+}
+
+/* AI italic text */
+
+.ai-content em {
+  color: #625a85;
+}
+
+/* AI blockquotes */
+
+.ai-content blockquote {
+  border-left: 4px solid #8b78d6;
+  padding: 10px 16px;
+
+  margin: 16px 0;
+
+  background: #f7f5ff;
+  border-radius: 5px;
+}
+
+/* AI tables, if generated */
+
+.ai-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 12px;
+  display: block;
+  overflow-x: auto;
+}
+
+.ai-content th,
+.ai-content td {
+  border: 1px solid #e5e2f0;
+  padding: 10px;
+  text-align: left;
+}
+
+.ai-content th {
+  background: #f2efff;
+  color: #51418c;
+}
+
+.ai-content tr:nth-child(even) {
+  background: #faf9ff;
+}
+
+/* AI code */
+
+.ai-content code {
+  background: #f1effa;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* AI disclaimer */
+
+.ai-disclaimer {
+  margin-top: 18px;
+
+  font-size: 12px;
+  color: #77758a;
+  line-height: 1.7;
+}
+
+/* AI API error */
+
+.ai-unavailable {
+  padding: 15px;
+  border-radius: 10px;
+
+  background: #fff4e5;
+  color: #8a5700;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   10. INFORMATION CARDS
+========================================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin-top: 16px;
+}
+
+.cards article {
+  background: white;
+  border: 1px solid #e3e9f1;
+  border-radius: 12px;
+  padding: 17px;
+}
+
+.cards small {
+  color: #2463eb;
+  font-weight: bold;
+}
+
+.cards h3 {
+  font-size: 13px;
+  margin: 9px 0 6px;
+}
+
+.cards p {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #6b7a90;
+  margin: 0;
+}
+
+/* =========================================
+   11. FOOTER
+========================================= */
+
+footer {
+  text-align: center;
+  color: #8793a5;
+  font-size: 10px;
+  margin-top: 22px;
+}
+
+/* =========================================
+   12. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 620px) {
+  main {
+    padding: 25px 14px;
+  }
+
+  .fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 17px;
+  }
+
+  .ai-section {
+    padding: 17px;
+  }
+
+  .ai-content {
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  .ai-section h3 {
+    font-size: 18px;
+  }
+
+  .heading {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-content {
+    padding: 12px;
+  }
+}
+
+/* =========================================
+   13. CBC REPORT COMPARISON
+========================================= */
+
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.upload-card {
+  padding: 22px;
+  border: 1px dashed #bdcce2;
+  border-radius: 12px;
+  background: #f9fbff;
+}
+
+.upload-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #eaf1ff;
+  color: #2463eb;
+  font-weight: 800;
+}
+
+.upload-card h3 {
+  font-size: 15px;
+  margin: 15px 0 5px;
+}
+
+.upload-card label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+}
+
+.upload-card input[type="file"] {
+  font-size: 11px;
+  background: white;
+}
+
+.report-preview,
+.comparison-results {
+  margin-top: 25px;
+}
+
+.report-preview h3 {
+  margin: 24px 0 5px;
+  font-size: 15px;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 12px;
+  border: 1px solid #e3e9f1;
+  text-align: left;
+}
+
+.comparison-table th {
+  background: #edf3ff;
+  color: #2455a5;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+  background: #f8faff;
+}
+
+.verification {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.verification input {
+  width: auto;
+  margin-top: 2px;
+}
+
+@media (max-width: 620px) {
+  .upload-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Compare Reports Navigation Button */
+
+.compare-link {
+  text-align: center;
+  margin: 22px 0;
+}
+
+.compare-link a {
+  display: inline-block;
+  background: #ffffff;
+  color: #2463eb;
+  border: 1px solid #2463eb;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.compare-link a:hover {
+  background: #2463eb;
+  color: #ffffff;
+}
+
+.compare-link span {
+  margin-left: 8px;
+}

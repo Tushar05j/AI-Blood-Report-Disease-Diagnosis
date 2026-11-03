@@ -1,0 +1,26 @@
+# Virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# API keys and environment variables
+.env
+.env.*
+
+# ChromaDB local database
+chroma_db/
+
+# IDE
+.vscode/
+
+# Temporary files and logs
+*.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

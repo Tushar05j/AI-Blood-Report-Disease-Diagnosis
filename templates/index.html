@@ -1,230 +1,237 @@
 <!doctype html>
-
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-```
-<title>Blood Report ML Demo</title>
+    <title>HemoPredict | AI Blood Report Analysis</title>
 
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/style.css') }}"
->
-```
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
 
-</head>
+  <body>
+    <!-- HEADER -->
 
-<body>
-
-<header>
-    <div class="brand">
+    <header>
+      <div class="brand">
         <span class="plus">+</span>
-        <span>Blood Report <b>ML Demo</b></span>
-    </div>
+        <span>Hemo<b>Predict</b></span>
+      </div>
 
-```
-<span class="tag">Academic prototype</span>
-```
+      <span class="tag">Academic Prototype</span>
+    </header>
 
-</header>
+    <main>
+      <!-- HERO SECTION -->
 
-<main>
+      <section class="hero">
+        <p class="eyebrow">MACHINE LEARNING + GENERATIVE AI</p>
 
-```
-<!-- HERO SECTION -->
-<section class="hero">
+        <h1>
+          AI Blood Report
+          <br />
+          <span>Disease Classification</span>
+        </h1>
 
-    <p class="eyebrow">MACHINE LEARNING PROJECT</p>
+        <p class="intro">
+          Enter CBC feature values to view the output of the trained Random
+          Forest model and receive an AI-generated explanation of the result.
+        </p>
 
-    <h1>
-        AI Blood Report
-        <br>
-        <span>Disease Classification</span>
-    </h1>
-
-    <p class="intro">
-        Enter CBC feature values to view the output of the trained
-        Random Forest model.
-    </p>
-
-    <div class="notice">
-        <b>Educational use only:</b>
-        This prototype is not a medical device, does not provide
-        a clinical diagnosis, and must not be used for patient-care decisions.
-    </div>
-
-</section>
-
-
-<!-- INPUT + OUTPUT PANEL -->
-<section class="panel">
-
-    <div class="heading">
-
-        <div>
-            <p class="eyebrow">MODEL INPUT</p>
-            <h2>CBC Parameters</h2>
+        <div class="notice">
+          <b>Educational use only:</b>
+          This prototype is not a medical device, does not provide a clinical
+          diagnosis, and must not be used for patient-care decisions.
         </div>
 
-        <span class="tag">01 / INPUT</span>
+        <!-- COMPARE REPORTS BUTTON -->
 
-    </div>
+        <div class="compare-link">
+          <a href="{{ url_for('compare_reports') }}">
+            Compare Reports <span>→</span>
+          </a>
+        </div>
+      </section>
 
+      <!-- INPUT + OUTPUT PANEL -->
 
-    <p class="muted">
-        Use the same units and conventions as the training dataset.
-    </p>
+      <section class="panel">
+        <div class="heading">
+          <div>
+            <p class="eyebrow">MODEL INPUT</p>
+            <h2>CBC Parameters</h2>
+          </div>
 
+          <span class="tag">01 / INPUT</span>
+        </div>
 
-    <!-- INPUT FORM -->
-    <form method="post">
+        <p class="muted">
+          Use the same units and conventions as the training dataset.
+        </p>
 
-        <div class="fields">
+        <!-- CBC INPUT FORM -->
 
+        <form method="post">
+          <div class="fields">
             {% for feature in features %}
 
             <label>
-                <span>{{ feature }}</span>
+              <span>{{ feature }}</span>
 
-                <input
-                    type="number"
-                    step="any"
-                    min="0"
-                    name="{{ feature }}"
-                    value="{{ values[feature] }}"
-                    placeholder="Enter {{ feature }}"
-                    required
-                >
+              <input
+                type="number"
+                step="any"
+                min="0"
+                name="{{ feature }}"
+                value="{{ values[feature] }}"
+                placeholder="Enter {{ feature }}"
+                required
+              />
             </label>
 
             {% endfor %}
+          </div>
 
-        </div>
-
-
-        <button type="submit">
+          <button type="submit">
             Generate Model Prediction
             <span>→</span>
-        </button>
+          </button>
+        </form>
 
-    </form>
+        <!-- ERROR MESSAGE -->
 
+        {% if error %}
 
-    <!-- ERROR MESSAGE -->
-    {% if error %}
+        <div class="error">{{ error }}</div>
 
-    <div class="error">
-        {{ error }}
-    </div>
+        {% endif %}
 
-    {% endif %}
+        <!-- MODEL RESULT -->
 
+        {% if result %}
 
-    <!-- MODEL RESULT -->
-    {% if result %}
+        <div class="result">
+          <p class="eyebrow">RANDOM FOREST MODEL OUTPUT</p>
 
-    <div class="result">
+          <h2>{{ result.label }}</h2>
 
-        <p class="eyebrow">MODEL OUTPUT</p>
-
-        <h2>{{ result.label }}</h2>
-
-        <p class="muted">
+          <p class="muted">
             Predicted dataset class ID:
             <b>{{ result.id }}</b>
-        </p>
+          </p>
 
+          <!-- MODEL VOTE ESTIMATES -->
 
-        <!-- VOTE ESTIMATES -->
-        {% if result.votes %}
+          {% if result.votes %}
 
-        <div class="votes-section">
-
+          <div class="votes-section">
             <h3>Model Class-Vote Estimates</h3>
 
             <p class="muted">
-                These are not calibrated medical probabilities or certainty.
+              These are not calibrated medical probabilities or measures of
+              diagnostic certainty.
             </p>
-
 
             {% for item in result.votes %}
 
             <div class="vote">
+              <div class="vote-header">
+                <span>{{ item.label }}</span>
+                <b>{{ item.percent }}%</b>
+              </div>
 
-                <div class="vote-header">
-                    <span>{{ item.label }}</span>
-                    <b>{{ item.percent }}%</b>
-                </div>
-
-                <div class="track">
-                    <i style="width: {{ item.percent }}%"></i>
-                </div>
-
+              <div class="track">
+                <i style="width: {{ item.percent }}%"></i>
+              </div>
             </div>
 
             {% endfor %}
+          </div>
 
+          {% endif %}
+
+          <!-- HEMOPREDICT AI EXPLANATION -->
+
+          <section class="ai-section">
+            <span class="ai-badge">✨ POWERED BY GROQ AI</span>
+
+            <h3>HemoPredict AI Insights</h3>
+
+            {% if result.ai_explanation %}
+
+            <div class="ai-content">{{ result.ai_explanation | safe }}</div>
+
+            {% elif llm_error %}
+
+            <div class="ai-unavailable">{{ llm_error }}</div>
+
+            {% else %}
+
+            <p class="muted">
+              AI explanation is not available for this prediction.
+            </p>
+
+            {% endif %}
+
+            <!-- DISCLAIMER -->
+
+            <p class="ai-disclaimer">
+              <b>Important:</b>
+              This AI-generated explanation is for educational purposes only. It
+              is not a medical diagnosis and should not replace consultation
+              with a qualified healthcare professional.
+            </p>
+          </section>
         </div>
 
         {% endif %}
+      </section>
 
-    </div>
+      <!-- INFORMATION CARDS -->
 
-    {% endif %}
+      <section class="cards">
+        <article>
+          <small>01</small>
 
-</section>
+          <h3>Preprocessing</h3>
 
+          <p>
+            The saved pipeline applies its fitted preprocessing steps to the
+            input.
+          </p>
+        </article>
 
-<!-- INFORMATION CARDS -->
-<section class="cards">
+        <article>
+          <small>02</small>
 
-    <article>
-        <small>01</small>
+          <h3>Random Forest</h3>
 
-        <h3>Preprocessing</h3>
+          <p>
+            Multiple decision trees contribute votes to the predicted class.
+          </p>
+        </article>
 
-        <p>
-            The saved pipeline applies its fitted preprocessing
-            steps to the input.
-        </p>
-    </article>
+        <article>
+          <small>03</small>
 
+          <h3>Generative AI</h3>
 
-    <article>
-        <small>02</small>
+          <p>
+            Groq-powered LLM generates a simple-language explanation of the
+            model output.
+          </p>
+        </article>
+      </section>
 
-        <h3>Random Forest</h3>
+      <!-- FOOTER -->
 
-        <p>
-            Multiple decision trees contribute votes to the
-            predicted class.
-        </p>
-    </article>
-
-
-    <article>
-        <small>03</small>
-
-        <h3>Interpretation</h3>
-
-        <p>
-            Outputs reflect dataset patterns and need
-            independent validation.
-        </p>
-    </article>
-
-</section>
-
-
-<!-- FOOTER -->
-<footer>
-    Academic demonstration • Verify class mapping and dataset units before use.
-</footer>
-```
-
-</main>
-
-</body>
+      <footer>
+        HemoPredict • Academic demonstration • Verify class mapping and dataset
+        units before use.
+      </footer>
+    </main>
+  </body>
 </html>
